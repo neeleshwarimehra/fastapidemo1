@@ -41,10 +41,14 @@ def get_todo_item(todo_id:int):
         if todo.id == todo_id:
             return todo
 
-    raise HTTPException(status_code=404, detail="Item not found")
+    raise HTTPException(status_code=404, detail="Todo Item not found")
 
 
-
+@app.post("/todos/{todo_id}")
+def update_todo_item(todo_id:int,updated_todo_item:Todo):
+    for index , todo in enumerate(todo_list):
+        if todo.id == todo_id:
+            return
 
 
 
