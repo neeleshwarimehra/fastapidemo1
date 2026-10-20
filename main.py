@@ -43,17 +43,47 @@ def get_todo_item(todo_id:int):
 
     raise HTTPException(status_code=404, detail="Todo Item not found")
 
-
-@app.post("/todos/{todo_id}")
+# http://127.0.0.1:8000/todos/1
+@app.put("/todos/{todo_id}")
 def update_todo_item(todo_id:int,updated_todo_item:Todo):
     for index , todo in enumerate(todo_list):
         if todo.id == todo_id:
-            return
+            todo_list[index] = updated_todo_item
+            print("Updated todo item:", updated_todo_item)
+            return  {"message":"item updated", "data":updated_todo_item}
+
+        raise HTTPException(status_code=404, detail="todo item not found")
+
+
+
+@app.delete("/todos/{todo_id}")
+def delete_todo_item(todo_id:int):
+    for index , todo in enumerate(todo_list):
+        if todo.id == todo_id:
+            deleted_todo = todo_list.pop(index)
+            return {"message":"item deleted", "data":deleted_todo}
+
+    raise HTTPException(status_code=404, detail="todo item not found")
 
 
 
 
 
+
+
+
+
+
+# {
+#   "message": "item updated",
+#   "data": {
+#     "id": 1,
+#     "title": "study DJANGO API",
+#     "description": "RAG demo",
+#     "priority": 1,
+#     "complete": false
+#   }
+# }
 
 # TESTING Basic API
 
